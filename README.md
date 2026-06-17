@@ -90,7 +90,9 @@ Execute the local desktop program:
 Bash
 python desktop_gui/gui_main.py
 
-https://github.com/user-attachments/assets/d625729a-1301-4f68-9b3c-d3534e3892bb
+
+
+https://github.com/user-attachments/assets/bf4db0dc-a8f0-406f-a583-96767c2c71f3
 
 
 
