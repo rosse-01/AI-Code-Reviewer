@@ -83,7 +83,9 @@ cd AI-Code-Reviewer
 
 # Install dependencies
 pip install -r requirements.txt
+
 3. Initialize the Client Connection
+   
 Open desktop_gui/gui_main.py in your code editor.
 
 Locate the api_url parameter configuration block (around line 76) and paste your live generated public Ngrok tunnel URL:
