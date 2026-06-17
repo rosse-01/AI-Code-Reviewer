@@ -7,8 +7,6 @@ An end-to-end, full-stack AI-powered code analysis application. The system decou
 
 ##  System Architecture
 
-The application is structured as a decoupled client-server microservice to optimize resource distribution and prevent consumer hardware bottlenecks:
-
 ```markdown
 ┌───────────────────────┐               Async HTTP POST           ┌────────────────────────┐
 │     Desktop Client    │ ──────────────────────────────────────► │   Cloud Inference API  │
@@ -29,29 +27,28 @@ The application is structured as a decoupled client-server microservice to optim
 * Inference Backend: A high-performance FastAPI web server running on an NVIDIA T4 Cloud GPU, which tokenizes, targets tensor vectors, and decodes incoming payloads using custom fine-tuned model parameters.
 
 ## Model Fine-Tuning & Training Pipeline
-The core intelligence layer of this application is powered by a custom fine-tuned variant of Qwen/Qwen2.5-Coder-7B-Instruct. The model was trained specifically on structured code-review datasets to recognize operational edge cases, anti-patterns, and security vulnerabilities.
+The core intelligence layer of this application is powered by a custom fine-tuned variant of Qwen/Qwen2.5-Coder-3B-Instruct. The model was trained specifically on structured code-review datasets to recognize operational edge cases, anti-patterns, and security vulnerabilities.
 
 ## Training Specifications & Hyperparameters
 You can review the full, step-by-step training implementation in the Fine-Tuning Notebook.
 
-Dataset Size: 13,000+ high-quality code-review samples
+* Dataset Size: 13,000+ high-quality code-review samples
 
-Training Method: QLoRA (Quantized Low-Rank Adaptation) — Trainable rank decomposition matrices were injected into the linear layers to drastically lower parameter overhead while preserving structural performance.
+* Training Method: QLoRA (Quantized Low-Rank Adaptation) — Trainable rank decomposition matrices were injected into the linear layers to drastically lower parameter overhead while preserving structural performance.
 
-Quantization Config: 4-bit NormalFloat (NF4) with double quantization to optimize cloud memory distribution.
+* Quantization Config: 4-bit NormalFloat (NF4) with double quantization to optimize cloud memory distribution.
 
-Hyperparameters Used:
+**Hyperparameters Used:**
 
-LoRA Rank (r): 16
+* LoRA Rank (r): 16
 
-LoRA Alpha (α): 32
+* LoRA Alpha (α): 32
 
-Target Modules: q_proj, v_proj, k_proj, o_proj, gate_proj, up_proj, down_proj
+* Target Modules: q_proj, v_proj, gate_proj, down_proj
 
-Learning Rate: 2×10 
-−4
+* Learning Rate: 3e-4
 
-Optimizer: Paged AdamW (32-bit)
+* Optimizer: Paged AdamW (8-bit)
 * Real-time convergence tracking was managed via **Weights & Biases (W&B)**, yielding the following validation metrics:
 
 | Evaluation Metric | Final Secured Value | Metric Scope |
@@ -64,36 +61,22 @@ Optimizer: Paged AdamW (32-bit)
 * **Deep Learning Frameworks:** PyTorch, PEFT, Hugging Face Transformers, Tokenizers, Accelerate
 * **Base Architecture Topology:** `Qwen/Qwen2.5-Coder-3B-Instruct`
 
-## Key Engineering & Optimization Features
-Decoupled Architecture: Offloads resource-heavy deep learning matrix operations from local CPU cores (which hit 300-second network timeouts) to a dedicated cloud graphics pipeline, accelerating inference cycles from minutes to seconds.
-
-Mixed-Precision Inference (FP16): Model tensor parameters are mapped using half-precision floating-point numbers (torch.float16). This cut the model's VRAM footprint by 50% (from ~28 GB down to ~14 GB), allowing an advanced 7B parameter LLM to fit snugly within strict 16 GB hardware memory constraints without triggering Out-of-Memory (OOM) fatal crashes.
-
-Hardware-Aware Design Selection: Explicitly configured to utilize FP16 rather than BF16 to natively align with the physical hardware architecture of the NVIDIA Turing-based T4 chip, avoiding costly software emulation overhead and ensuring maximum Tensor Core acceleration.
-
-Pydantic Data Contracts: Employs rigorous data validation at the API boundary, guaranteeing structured JSON validation and contract enforcement for all inbound payloads.
-
-🛠️ Step-by-Step Setup & Deployment
+## Step-by-Step Setup & Deployment
 1. Fire up the Cloud Inference Server
 Open the backend execution script inside your cloud runtime container environment.
 
 Ensure your hardware accelerator engine is explicitly set to T4 GPU.
 
-Supply your NGROK_AUTH_TOKEN and execute the pipeline cell. This will mount your fine-tuned weights directly into cloud memory:
+Supply your NGROK_AUTH_TOKEN and execute the pipeline cell. This will mount your fine-tuned weights directly into cloud memory.
 
-Plaintext
-============================================================
-🌍 CLOUD BACKEND ENGINE IS RUNNING
-👉 PASTE THIS ADDRESS IN YOUR LOCAL GUI_MAIN.PY CODE:
-   [https://your-secure-id.ngrok-free.dev/review](https://your-secure-id.ngrok-free.dev/review)
-============================================================
+
 2. Configure Local Client Environment
 Clone this repository to your local machine and install the application dependencies:
 
 Bash
 # Clone the repository
-git clone [https://github.com/your-username/Code-Review-Assistant.git](https://github.com/your-username/Code-Review-Assistant.git)
-cd Code-Review-Assistant
+git clone [https://github.com/your-username/AI-Code-Reviewer.git](https://github.com/your-username/AI-Code-Reviewer.git)
+cd AI-Code-Reviewer
 
 # Install dependencies
 pip install -r requirements.txt
@@ -102,16 +85,14 @@ Open desktop_gui/gui_main.py in your code editor.
 
 Locate the api_url parameter configuration block (around line 76) and paste your live generated public Ngrok tunnel URL:
 
-Python
-api_url = "[https://your-secure-id.ngrok-free.dev/review](https://your-secure-id.ngrok-free.dev/review)"
 Execute the local desktop program:
 
 Bash
 python desktop_gui/gui_main.py
-🧪 Demonstration & Model Capabilities
+## Demonstration & Model Capabilities
 When a user feeds unoptimized or structurally vulnerable code blocks into the client interface, the custom fine-tuned model evaluates the snippet across three distinct criteria: Security Vulnerabilities, Performance Bottlenecks, and PEP 8 Code Style Standard Compliance.
 
-Input Test Case
+Input Test Case:
 Python
 def fetch_user_data(user_input_id):
     query = "SELECT * FROM users WHERE id = '" + user_input_id + "'"
@@ -128,7 +109,7 @@ The function is vulnerable to SQL injection through the 'user_input_id' paramete
 
 Solution:
 Use parameterized queries to safely handle user input.
-🧰 Tech Stack Used
+## Tech Stack Used
 Frontend UI: Python, CustomTkinter (Asynchronous Multi-Threaded Engine)
 
 Backend Web Layers: FastAPI, Uvicorn, Pydantic, Nest-Asyncio
