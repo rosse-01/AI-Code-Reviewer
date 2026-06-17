@@ -4,6 +4,9 @@
 An end-to-end, full-stack AI-powered code analysis application. The system decouples a responsive, dark-mode **CustomTkinter** desktop user interface from a high-performance **FastAPI** inference engine running on a remote cloud GPU, utilizing a custom fine-tuned **Qwen2.5-Coder** model optimized for half-precision mixed inference.
 
 ---
+## Live Demonstration:
+https://github.com/user-attachments/assets/bf4db0dc-a8f0-406f-a583-96767c2c71f3
+
 
 ##  System Architecture
 
@@ -89,13 +92,6 @@ Execute the local desktop program:
 
 Bash
 python desktop_gui/gui_main.py
-
-
-
-https://github.com/user-attachments/assets/bf4db0dc-a8f0-406f-a583-96767c2c71f3
-
-
-
 
 
 ## Tech Stack Used
