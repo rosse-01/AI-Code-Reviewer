@@ -67,6 +67,7 @@ You can review the full, step-by-step training implementation in the Fine-Tuning
 ## Step-by-Step Setup & Deployment
 
 **1. Fire up the Cloud Inference Server**
+
 Open the backend execution script inside your cloud runtime container environment.
 
 Ensure your hardware accelerator engine is explicitly set to T4 GPU.
@@ -75,6 +76,7 @@ Supply your NGROK_AUTH_TOKEN and execute the pipeline cell. This will mount your
 
 
 **2. Configure Local Client Environment**
+
 Clone this repository to your local machine and install the application dependencies:
 
 Bash
@@ -86,7 +88,7 @@ cd AI-Code-Reviewer
 Install dependencies: 
 pip install -r requirements.txt
 
-** 3. Initialize the Client Connection**
+**3. Initialize the Client Connection**
    
 Open desktop_gui/gui_main.py in your code editor.
 
