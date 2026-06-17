@@ -78,12 +78,12 @@ Supply your NGROK_AUTH_TOKEN and execute the pipeline cell. This will mount your
 Clone this repository to your local machine and install the application dependencies:
 
 Bash
-# Clone the repository
+Clone the repository: 
 git clone [https://github.com/your-username/AI-Code-Reviewer.git](https://github.com/your-username/AI-Code-Reviewer.git)
 
 cd AI-Code-Reviewer
 
-# Install dependencies
+Install dependencies: 
 pip install -r requirements.txt
 
 ** 3. Initialize the Client Connection**
