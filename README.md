@@ -9,7 +9,7 @@ An end-to-end, full-stack AI-powered code analysis application. The system decou
 
 The application is structured as a decoupled client-server microservice to optimize resource distribution and prevent consumer hardware bottlenecks:
 
-
+```markdown
 ┌───────────────────────┐            📡 Async HTTP POST           ┌────────────────────────┐
 │     Desktop Client    │ ──────────────────────────────────────► │   Cloud Inference API  │
 │ ───────────────────── │                                         │ ────────────────────── │
@@ -21,6 +21,7 @@ The application is structured as a decoupled client-server microservice to optim
                                                                    🧠 Model Layer:
                                                                       rose00009/Code_Review_Assistant_Model1
                                                                       (Optimized torch.float16)
+```
 Frontend Client: A native dark-mode desktop GUI built with CustomTkinter. It handles all network transactions via background workers asynchronously, ensuring the main interface thread never freezes during computational delays.
 
 Network Gateway: A secure public edge-bridge proxy tunnel powered by Ngrok that opens an external HTTP router gateway into isolated cloud virtual kernels.
