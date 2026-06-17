@@ -22,11 +22,11 @@ The application is structured as a decoupled client-server microservice to optim
                                                                       rose00009/Code_Review_Assistant_Model1
                                                                       (Optimized torch.float16)
 ```
-**Frontend Client:** A native dark-mode desktop GUI built with CustomTkinter. It handles all network transactions via background workers asynchronously, ensuring the main interface thread never freezes during computational delays.
+* Frontend Client: A native dark-mode desktop GUI built with CustomTkinter. It handles all network transactions via background workers asynchronously, ensuring the main interface thread never freezes during computational delays.
 
-**Network Gateway:** A secure public edge-bridge proxy tunnel powered by Ngrok that opens an external HTTP router gateway into isolated cloud virtual kernels.
+* Network Gateway: A secure public edge-bridge proxy tunnel powered by Ngrok that opens an external HTTP router gateway into isolated cloud virtual kernels.
 
-**Inference Backend:** A high-performance FastAPI web server running on an NVIDIA T4 Cloud GPU, which tokenizes, targets tensor vectors, and decodes incoming payloads using custom fine-tuned model parameters.
+* Inference Backend: A high-performance FastAPI web server running on an NVIDIA T4 Cloud GPU, which tokenizes, targets tensor vectors, and decodes incoming payloads using custom fine-tuned model parameters.
 
 ## Model Fine-Tuning & Training Pipeline
 The core intelligence layer of this application is powered by a custom fine-tuned variant of Qwen/Qwen2.5-Coder-7B-Instruct. The model was trained specifically on structured code-review datasets to recognize operational edge cases, anti-patterns, and security vulnerabilities.
