@@ -1,4 +1,4 @@
-```markdown
+
 # Code-Review-Assistant 🚀
 
 An end-to-end, full-stack AI-powered code analysis application. The system decouples a responsive, dark-mode **CustomTkinter** desktop user interface from a high-performance **FastAPI** inference engine running on a remote cloud GPU, utilizing a custom fine-tuned **Qwen2.5-Coder** model optimized for half-precision mixed inference.
@@ -9,7 +9,7 @@ An end-to-end, full-stack AI-powered code analysis application. The system decou
 
 The application is structured as a decoupled client-server microservice to optimize resource distribution and prevent consumer hardware bottlenecks:
 
-```text
+
 ┌───────────────────────┐            📡 Async HTTP POST           ┌────────────────────────┐
 │     Desktop Client    │ ──────────────────────────────────────► │   Cloud Inference API  │
 │ ───────────────────── │                                         │ ────────────────────── │
@@ -62,17 +62,6 @@ Hardware-Aware Design Selection: Explicitly configured to utilize FP16 rather th
 
 Pydantic Data Contracts: Employs rigorous data validation at the API boundary, guaranteeing structured JSON validation and contract enforcement for all inbound payloads.
 
-📁 Repository Structure
-Plaintext
-├── backend_api/
-│   ├── app.py                # Core FastAPI application logic
-│   └── Dockerfile            # Container deployment configuration
-├── desktop_gui/
-│   └── gui_main.py           # CustomTkinter frontend window and networking
-├── training_notebooks/
-│   └── qwen2_5_coder_finetune.ipynb  # QLoRA fine-tuning training scripts
-├── requirements.txt          # Software dependencies manifest
-└── README.md                 # System documentation
 🛠️ Step-by-Step Setup & Deployment
 1. Fire up the Cloud Inference Server
 Open the backend execution script inside your cloud runtime container environment.
