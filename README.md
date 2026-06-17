@@ -1,20 +1,20 @@
 
-# Code-Review-Assistant 🚀
+# Code-Review-Assistant 
 
 An end-to-end, full-stack AI-powered code analysis application. The system decouples a responsive, dark-mode **CustomTkinter** desktop user interface from a high-performance **FastAPI** inference engine running on a remote cloud GPU, utilizing a custom fine-tuned **Qwen2.5-Coder** model optimized for half-precision mixed inference.
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 The application is structured as a decoupled client-server microservice to optimize resource distribution and prevent consumer hardware bottlenecks:
 
 ```markdown
-┌───────────────────────┐            📡 Async HTTP POST           ┌────────────────────────┐
+┌───────────────────────┐               Async HTTP POST           ┌────────────────────────┐
 │     Desktop Client    │ ──────────────────────────────────────► │   Cloud Inference API  │
 │ ───────────────────── │                                         │ ────────────────────── │
 │ • CustomTkinter GUI   │ ◄────────────────────────────────────── │ • FastAPI Gateway      │
-│ • Async UI Threading  │             📦 JSON Response            │ • Uvicorn Server       │
+│ • Async UI Threading  │                JSON Response            │ • Uvicorn Server       │
 │                       │            (AI Code Critique)           │ • NVIDIA T4 Cloud GPU  │
 └───────────────────────┘                                         └────────────────────────┘
                                                                               │
@@ -22,16 +22,16 @@ The application is structured as a decoupled client-server microservice to optim
                                                                       rose00009/Code_Review_Assistant_Model1
                                                                       (Optimized torch.float16)
 ```
-Frontend Client: A native dark-mode desktop GUI built with CustomTkinter. It handles all network transactions via background workers asynchronously, ensuring the main interface thread never freezes during computational delays.
+**Frontend Client:** A native dark-mode desktop GUI built with CustomTkinter. It handles all network transactions via background workers asynchronously, ensuring the main interface thread never freezes during computational delays.
 
-Network Gateway: A secure public edge-bridge proxy tunnel powered by Ngrok that opens an external HTTP router gateway into isolated cloud virtual kernels.
+**Network Gateway:** A secure public edge-bridge proxy tunnel powered by Ngrok that opens an external HTTP router gateway into isolated cloud virtual kernels.
 
-Inference Backend: A high-performance FastAPI web server running on an NVIDIA T4 Cloud GPU, which tokenizes, targets tensor vectors, and decodes incoming payloads using custom fine-tuned model parameters.
+**Inference Backend:** A high-performance FastAPI web server running on an NVIDIA T4 Cloud GPU, which tokenizes, targets tensor vectors, and decodes incoming payloads using custom fine-tuned model parameters.
 
 ## Model Fine-Tuning & Training Pipeline
 The core intelligence layer of this application is powered by a custom fine-tuned variant of Qwen/Qwen2.5-Coder-7B-Instruct. The model was trained specifically on structured code-review datasets to recognize operational edge cases, anti-patterns, and security vulnerabilities.
 
-📊 Training Specifications & Hyperparameters
+## Training Specifications & Hyperparameters
 You can review the full, step-by-step training implementation in the Fine-Tuning Notebook.
 
 Dataset Size: 13,000+ high-quality code-review samples
@@ -50,11 +50,21 @@ Target Modules: q_proj, v_proj, k_proj, o_proj, gate_proj, up_proj, down_proj
 
 Learning Rate: 2×10 
 −4
- 
 
 Optimizer: Paged AdamW (32-bit)
+* Real-time convergence tracking was managed via **Weights & Biases (W&B)**, yielding the following validation metrics:
 
-⚡ Key Engineering & Optimization Features
+| Evaluation Metric | Final Secured Value | Metric Scope |
+| :--- | :--- | :--- |
+| **Validation Loss** | `0.636` | Cross-Entropy Loss Convergence |
+| **Mean Token Accuracy** | `82.1%` | Evaluation Token Prediction Alignment |
+| **ROUGE-L Score** | `0.740` | Structural Text Coherence Mapping |
+| **BLEU Rating** | `0.650` | Exact Phrase Code Precision |
+
+* **Deep Learning Frameworks:** PyTorch, PEFT, Hugging Face Transformers, Tokenizers, Accelerate
+* **Base Architecture Topology:** `Qwen/Qwen2.5-Coder-3B-Instruct`
+
+## Key Engineering & Optimization Features
 Decoupled Architecture: Offloads resource-heavy deep learning matrix operations from local CPU cores (which hit 300-second network timeouts) to a dedicated cloud graphics pipeline, accelerating inference cycles from minutes to seconds.
 
 Mixed-Precision Inference (FP16): Model tensor parameters are mapped using half-precision floating-point numbers (torch.float16). This cut the model's VRAM footprint by 50% (from ~28 GB down to ~14 GB), allowing an advanced 7B parameter LLM to fit snugly within strict 16 GB hardware memory constraints without triggering Out-of-Memory (OOM) fatal crashes.
@@ -125,16 +135,5 @@ Backend Web Layers: FastAPI, Uvicorn, Pydantic, Nest-Asyncio
 
 Deep Learning Frameworks: PyTorch, PEFT, Hugging Face Transformers, Tokenizers, Accelerate
 
-Base Architecture Topology: Qwen/Qwen2.5-Coder-7B-Instruct
+Base Architecture Topology: Qwen/Qwen2.5-Coder-3B-Instruct
   
-* Real-time convergence tracking was managed via **Weights & Biases (W&B)**, yielding the following validation metrics:
-
-| Evaluation Metric | Final Secured Value | Metric Scope |
-| :--- | :--- | :--- |
-| **Validation Loss** | `0.636` | Cross-Entropy Loss Convergence |
-| **Mean Token Accuracy** | `82.1%` | Evaluation Token Prediction Alignment |
-| **ROUGE-L Score** | `0.740` | Structural Text Coherence Mapping |
-| **BLEU Rating** | `0.650` | Exact Phrase Code Precision |
-
-* **Deep Learning Frameworks:** PyTorch, PEFT, Hugging Face Transformers, Tokenizers, Accelerate
-* **Base Architecture Topology:** `Qwen/Qwen2.5-Coder-3B-Instruct`
