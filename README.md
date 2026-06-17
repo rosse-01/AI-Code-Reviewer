@@ -89,26 +89,13 @@ Execute the local desktop program:
 
 Bash
 python desktop_gui/gui_main.py
-## Demonstration & Model Capabilities
-When a user feeds unoptimized or structurally vulnerable code blocks into the client interface, the custom fine-tuned model evaluates the snippet across three distinct criteria: Security Vulnerabilities, Performance Bottlenecks, and PEP 8 Code Style Standard Compliance.
 
-Input Test Case:
-Python
-def fetch_user_data(user_input_id):
-    query = "SELECT * FROM users WHERE id = '" + user_input_id + "'"
-    conn = sqlite3.connect("database.db")
-    cursor = conn.cursor()
-    cursor.execute(query)
-    return cursor.fetchall()
-AI Generated Analysis Output
-Plaintext
-Critical Security Issue: SQL Injection in User Input
+https://github.com/user-attachments/assets/d625729a-1301-4f68-9b3c-d3534e3892bb
 
-Problem Analysis:
-The function is vulnerable to SQL injection through the 'user_input_id' parameter. An attacker can manipulate the input to execute arbitrary SQL commands. For example, a value of '1 OR 1=1' would return all records from the database. The use of string concatenation with unvalidated user input is a classic vulnerability.
 
-Solution:
-Use parameterized queries to safely handle user input.
+
+
+
 ## Tech Stack Used
 Frontend UI: Python, CustomTkinter (Asynchronous Multi-Threaded Engine)
 
