@@ -1,4 +1,4 @@
-# AI Code Reviewer
+# Code-Review-Assistant 
 
 An end-to-end, full-stack AI-powered code analysis application. The system decouples a responsive, dark-mode **CustomTkinter** desktop user interface from a high-performance **FastAPI** inference engine running on a remote cloud GPU, utilizing a custom fine-tuned **Qwen2.5-Coder** model optimized for half-precision mixed inference.
 
@@ -6,6 +6,9 @@ An end-to-end, full-stack AI-powered code analysis application. The system decou
 
 ##  System Architecture
 
+The application is structured as a decoupled client-server microservice to optimize resource distribution and prevent consumer hardware bottlenecks:
+
+```text
 ┌───────────────────────┐                Asynchronous             ┌────────────────────────┐
 │     Desktop Client    │             HTTP POST Request           │   Cloud Inference API  │
 │ ───────────────────── │ ──────────────────────────────────────► │ ────────────────────── │
@@ -16,7 +19,7 @@ An end-to-end, full-stack AI-powered code analysis application. The system decou
                                                                               │
                                                                       Model Layer:
                                                                       rose00009/Code_Review_Assistant_Model1
-                                                                      (Optimized torch.float16)
+                                                                      (Optimized torch.float16))
 
 1. **Frontend Client:** A native dark-mode desktop GUI built with `CustomTkinter`. It handles all network transactions via background workers asynchronously, ensuring the main interface thread never freezes during computational delays.
 2. **Network Gateway:** A secure public edge-bridge proxy tunnel powered by `Ngrok` that opens an external HTTP router gateway into isolated cloud virtual kernels.
