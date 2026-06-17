@@ -28,7 +28,7 @@ Network Gateway: A secure public edge-bridge proxy tunnel powered by Ngrok that 
 
 Inference Backend: A high-performance FastAPI web server running on an NVIDIA T4 Cloud GPU, which tokenizes, targets tensor vectors, and decodes incoming payloads using custom fine-tuned model parameters.
 
-🧠 Model Fine-Tuning & Training Pipeline
+## Model Fine-Tuning & Training Pipeline
 The core intelligence layer of this application is powered by a custom fine-tuned variant of Qwen/Qwen2.5-Coder-7B-Instruct. The model was trained specifically on structured code-review datasets to recognize operational edge cases, anti-patterns, and security vulnerabilities.
 
 📊 Training Specifications & Hyperparameters
